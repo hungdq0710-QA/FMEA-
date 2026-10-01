@@ -204,7 +204,7 @@ elif menu == "🎯 C&E Matrix (Cause & Effect)":
     st.subheader("🎯 Cause & Effect Matrix: *“Process/Input nào có ảnh hưởng lớn đến Quality Output nào?”*")
     st.markdown("Nhập thông tin quy trình, đầu vào, giải thích chi tiết và chấm điểm mức độ ảnh hưởng.")
     
-    with st.form("ce_matrix_form"):
+    with st.form("ce_matrix_form", clear_on_submit=True):
         st.markdown("### 📝 1. Thêm mới Process, Input & Giải thích chi tiết")
         col_p1, col_p2 = st.columns(2)
         with col_p1:
@@ -217,21 +217,22 @@ elif menu == "🎯 C&E Matrix (Cause & Effect)":
         
         col_s1, col_s2, col_s3 = st.columns(3)
         with col_s1:
-            probe_mark = st.slider("Probe Mark", 0, 10, 5)
-            function = st.slider("Function", 0, 10, 5)
-            leakage_short = st.slider("Leakage/Short", 0, 10, 5)
-            cosmetic = st.slider("Cosmetic", 0, 10, 5)
+            probe_mark = st.slider("Probe Mark", 0, 10, 5, key="ce_probe")
+            function = st.slider("Function", 0, 10, 5, key="ce_func")
+            leakage_short = st.slider("Leakage/Short", 0, 10, 5, key="ce_leak")
+            cosmetic = st.slider("Cosmetic", 0, 10, 5, key="ce_cos")
         with col_s2:
-            iqc_pa = st.slider("IQC P&A", 0, 10, 5)
-            mechanical_robust = st.slider("Mechanical Robust", 0, 10, 5)
-            contact_open = st.slider("Contact/Open", 0, 10, 5)
-            packing = st.slider("Packing", 0, 10, 5)
+            iqc_pa = st.slider("IQC P&A", 0, 10, 5, key="ce_iqc")
+            mechanical_robust = st.slider("Mechanical Robust", 0, 10, 5, key="ce_mech")
+            contact_open = st.slider("Contact/Open", 0, 10, 5, key="ce_cont")
+            packing = st.slider("Packing", 0, 10, 5, key="ce_pack")
         with col_s3:
-            delivery = st.slider("Delivery", 0, 10, 5)
-            life_time = st.slider("Life Time", 0, 10, 5)
-            rma = st.slider("RMA", 0, 10, 5)
+            delivery = st.slider("Delivery", 0, 10, 5, key="ce_deliv")
+            life_time = st.slider("Life Time", 0, 10, 5, key="ce_life")
+            rma = st.slider("RMA", 0, 10, 5, key="ce_rma")
             
         submitted_ce = st.form_submit_button("➕ Thêm Process/Input vào C&E Matrix")
+        
         if submitted_ce:
             if process_input and input_input:
                 total_score = (probe_mark + function + leakage_short + cosmetic + 
@@ -255,7 +256,14 @@ elif menu == "🎯 C&E Matrix (Cause & Effect)":
                     "RMA": rma,
                     "Tổng điểm": total_score
                 }
-                updated_ce = pd.concat([df_ce, pd.DataFrame([new_ce_row])], ignore_index=True)
+                
+                # Đọc lại file hiện tại để đảm bảo không bị sót dữ liệu cũ
+                if os.path.exists(CE_FILE):
+                    current_df_ce = pd.read_csv(CE_FILE)
+                else:
+                    current_df_ce = df_ce
+                
+                updated_ce = pd.concat([current_df_ce, pd.DataFrame([new_ce_row])], ignore_index=True)
                 updated_ce.to_csv(CE_FILE, index=False)
                 st.success("Đã thêm thành công vào C&E Matrix!")
                 st.rerun()
@@ -265,9 +273,20 @@ elif menu == "🎯 C&E Matrix (Cause & Effect)":
     st.markdown("---")
     st.subheader("📋 Quản lý & Chỉnh sửa / Xóa dòng trong C&E Matrix")
     
-    edited_ce_df = st.data_editor(df_ce.sort_values(by="Tổng điểm", ascending=False), use_container_width=True, num_rows="dynamic", key="ce_editor")
+    # Đọc lại dữ liệu mới nhất từ file CSV để hiển thị lên bảng bên dưới
+    if os.path.exists(CE_FILE):
+        df_ce_current = pd.read_csv(CE_FILE)
+    else:
+        df_ce_current = df_ce
+
+    edited_ce_df = st.data_editor(
+        df_ce_current.sort_values(by="Tổng điểm", ascending=False), 
+        use_container_width=True, 
+        num_rows="dynamic", 
+        key="ce_editor"
+    )
     
-    if st.button("💾 Lưu thay đổi C&E Matrix"):
+    if st.button("💾 Lưu thay đổi C&E Matrix", key="btn_save_ce"):
         edited_ce_df.to_csv(CE_FILE, index=False)
         st.success("Đã cập nhật và lưu lại danh sách C&E Matrix thành công!")
         st.rerun()
