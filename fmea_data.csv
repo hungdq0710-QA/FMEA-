@@ -1,0 +1,3 @@
+Công đoạn,Tiềm ẩn lỗi,Tác động (SEV),Nguyên nhân,Giải pháp kiểm soát,Phòng ban,Trạng thái,DET
+Kiểm tra & Chuẩn bị PCB,Lỗi mạch (Open/Short),8,Lỗi file Gerber hoặc mòn mũi khoan,Tự động hóa kiểm tra AOI,Production,Đang xử lý,4
+Gắn Spider Springs,Lực ép spring không đều,9,Thao tác thủ công hoặc jig mòn,Cải tiến jig định vị tự động,QA,Hoàn thành,3

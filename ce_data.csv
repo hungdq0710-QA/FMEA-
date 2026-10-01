@@ -1,0 +1,14 @@
+Process,Input,Giải thích Input,Probe Mark,Function,Leakage/Short,Cosmetic,IQC P&A,Mechanical Robust,Contact/Open,Packing,Delivery,Life Time,RMA,Tổng điểm
+Lắp ráp Spider Springs,Độ chính xác lực ép jig,"Lực tác động của jig khi ép spider springs lên PCB, lực không đều gây biến dạng.",9,8,3,2,4,9,9,1,1,8,7,61
+QA-IQA,PCB,"PCB không trực tiếp tạo ra Probe Mark. Probe Mark chủ yếu liên quan Probe, planarity, alignment, force và DUT interface. PCB chỉ có thể ảnh hưởng gián tiếp thông qua electrical/mechanical mounting.
+PCB là một phần quan trọng của electrical circuit/interface. PCB defect, wrong routing, open/short, wrong component interface… có thể làm toàn bộ Probe Card Function NG.
+PCB có quan hệ trực tiếp với insulation, routing, spacing, contamination và short path. PCB defect có thể trực tiếp gây Leakage/Short.
+PCB surface, solder mask, scratch, discoloration… có thể tạo cosmetic NG, nhưng không phải nguồn chính của cosmetic issue trên toàn Probe Card.
+PCB dimension, hole position, pad position, thickness, flatness… có thể ảnh hưởng đến assembly/positioning. Đặc biệt nếu P&A = Position & Alignment.
+PCB thickness, rigidity, mounting hole, warpage, material và mechanical interface có thể ảnh hưởng đến structural robustness.
+PCB trace, via, pad, connector interface, solder connection… đều có thể gây Open hoặc unstable electrical contact.
+PCB bản thân không phải nguyên nhân chính của packing problem. Chỉ ảnh hưởng gián tiếp nếu PCB dimension/structure gây khó khăn khi packing.
+PCB shortage, supplier delay hoặc incoming NG có thể indirectly delay delivery, nhưng đây không phải intrinsic quality relationship.
+PCB reliability có thể ảnh hưởng đến card lifetime: thermal cycling, copper fatigue, via reliability, insulation degradation, solder joint reliability…
+PCB defect có thể là một contributor đến RMA, đặc biệt các lỗi electrical/reliability. Tuy nhiên RMA là business/customer outcome, không phải failure mode trực tiếp.
+",3,9,10,4,8,8,9,2,3,8,8,72
